@@ -10,6 +10,16 @@ const fs = require("fs");
 const readline = require("readline");
 const { google } = require("googleapis");
 
+router.get("/getByUser/:id", (req, res, next) => {
+  let { id } = req.params;
+  return Articles.find({ author: id }).then((articles) => {
+    if (!articles) {
+      return res.sendStatus(400);
+    }
+    return res.json({ articles });
+  });
+});
+
 router.get("/lillachoice", function (req, response) {
   const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
   const TOKEN_PATH = "token.json";
